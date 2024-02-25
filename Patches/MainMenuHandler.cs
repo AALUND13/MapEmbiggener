@@ -18,7 +18,6 @@ namespace MapEmbiggener.Patches
             {
                 // Create the bounds border
                 OutOfBoundsUtils.CreateBorder();
-                Debug.Log("Is This Working?");
             });
         }
     }
