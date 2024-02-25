@@ -77,22 +77,14 @@ namespace MapEmbiggener
 
             this.gameObject.AddComponent<OutOfBoundsUtils>();
             this.gameObject.AddComponent<ControllerManager>().Init();
-            
-            On.MainMenuHandler.Awake += (orig, self) =>
-            {
-                orig(self);
-                this.ExecuteAfterSeconds(0.5f, () =>
-                {
-                    // Create the bounds border
-                    OutOfBoundsUtils.CreateBorder();
-                });
-            };
+
+            new Harmony(MapEmbiggener.ModId).PatchAll();
         }
 
+
+
         private void Start()
-        {
-            new Harmony(MapEmbiggener.ModId).PatchAll();
-            
+        {   
             // load settings
             MapEmbiggener.setSize = MapEmbiggener.SizeConfig.Value;
             MapEmbiggener.suddenDeathMode = MapEmbiggener.SuddenDeathConfig.Value;

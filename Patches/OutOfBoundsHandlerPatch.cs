@@ -208,7 +208,7 @@ namespace MapEmbiggener.Patches
                         }
                         ___rpc.CallFunction("OutOfBounds");
                         ___data.healthHandler.CallTakeForce(__instance.transform.up * 200f * launchCorrection * (float)___data.playerVel.GetFieldValue("mass"), ForceMode2D.Impulse, false, true, 0f);
-                        ___data.healthHandler.CallTakeDamage(2f * ___data.maxHealth * __instance.transform.up, ___data.transform.position, null, null, true);
+                        ___data.healthHandler.CallTakeDamage(2f * ___data.MaxHealth * __instance.transform.up, ___data.transform.position, null, null, true);
                     }
                 }
             }
