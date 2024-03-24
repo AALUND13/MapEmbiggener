@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnboundLib.GameModes;
+using Unbound.Gamemodes;
 namespace MapEmbiggener.Controllers
 {
     public abstract class MapController : IMapController

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnboundLib.GameModes;
+using Unbound.Gamemodes;
 using System.Collections;
 namespace MapEmbiggener.Controllers
 {

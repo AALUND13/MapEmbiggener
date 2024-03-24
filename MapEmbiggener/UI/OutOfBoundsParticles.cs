@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnboundLib;
+using Unbound.Core;
 using MapEmbiggener.Controllers;
 
 namespace MapEmbiggener.UI
