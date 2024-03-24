@@ -2,14 +2,14 @@
 using BepInEx;
 using HarmonyLib;
 using Photon.Pun;
-using UnboundLib;
-using UnboundLib.GameModes;
+using Unbound;
+using Unbound.Gamemodes;
 using UnityEngine;
 using System.Collections;
-using UnboundLib.Networking;
+using Unbound.Core.Networking;
 using System.Linq;
 using System.Collections.Generic;
-using UnboundLib.Utils.UI;
+using Unbound.Core.Utils.UI;
 using TMPro;
 using UnityEngine.UI;
 using BepInEx.Configuration;
@@ -91,8 +91,8 @@ namespace MapEmbiggener
             MapEmbiggener.chaosMode = MapEmbiggener.ChaosConfig.Value;
             MapEmbiggener.chaosModeClassic = MapEmbiggener.ClassicChaosConfig.Value;
 
-            Unbound.RegisterCredits(MapEmbiggener.ModName, new String[] {"Pykess", "Ascyst (Project creation)", "BossSloth (Customizable bounds)"}, new string[] { "github", "support pykess", "support ascyst", "support bosssloth" }, new string[] { "https://github.com/pdcook/MapEmbiggener", "https://ko-fi.com/pykess", "https://www.buymeacoffee.com/Ascyst", "https://www.buymeacoffee.com/BossSloth" });
-            Unbound.RegisterMenu(MapEmbiggener.ModName, () => { }, this.NewGUI, null, false);
+            Unbound.Core.UnboundCore.RegisterCredits(MapEmbiggener.ModName, new String[] {"Pykess", "Ascyst (Project creation)", "BossSloth (Customizable bounds)"}, new string[] { "github", "support pykess", "support ascyst", "support bosssloth" }, new string[] { "https://github.com/pdcook/MapEmbiggener", "https://ko-fi.com/pykess", "https://www.buymeacoffee.com/Ascyst", "https://www.buymeacoffee.com/BossSloth" });
+            Unbound.Core.UnboundCore.RegisterMenu(MapEmbiggener.ModName, () => { }, this.NewGUI, null, false);
 
             // hooks for OOB patch
             GameModeManager.AddHook(GameModeHooks.HookPointStart, (gm) => OutOfBoundsUtils.SetOOBEnabled(true));
