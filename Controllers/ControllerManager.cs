@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Collections;
 using MapEmbiggener.Controllers.Default;
 using MapEmbiggener.UI;
-using UnboundLib.GameModes;
-using UnboundLib.Networking;
-using UnboundLib;
+using Unbound.Gamemodes;
+using Unbound.Core;
 using Photon.Pun;
-using MapEmbiggener.Networking;
+using Unbound.Core.Networking;
+
 namespace MapEmbiggener.Controllers
 {
     public class ControllerManager : MonoBehaviour

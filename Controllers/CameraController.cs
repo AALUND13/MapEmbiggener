@@ -1,4 +1,4 @@
-﻿using UnboundLib.GameModes;
+﻿using Unbound.Gamemodes;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;

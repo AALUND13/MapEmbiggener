@@ -1,6 +1,6 @@
 ﻿using System;
 using HarmonyLib;
-using UnboundLib;
+using Unbound.Core;
 using UnityEngine;
 using MapEmbiggener.Controllers;
 using System.Reflection;
