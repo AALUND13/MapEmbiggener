@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
-using UnboundLib.GameModes;
+using Unbound.Gamemodes;
 using Photon.Pun;
 using UnityEngine;
 using MapEmbiggener.UI;

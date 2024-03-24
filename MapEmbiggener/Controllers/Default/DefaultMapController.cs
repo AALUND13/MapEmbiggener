@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using UnboundLib.GameModes;
-using UnboundLib;
-using UnboundLib.Networking;
+using Unbound.Gamemodes;
+using Unbound;
+using Unbound.Core;
 using Photon.Pun;
 namespace MapEmbiggener.Controllers.Default
 {

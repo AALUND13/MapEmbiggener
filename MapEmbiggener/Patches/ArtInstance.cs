@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using HarmonyLib;
-using UnboundLib;
+using Unbound.Core;
 using MapEmbiggener.UI;
 namespace MapEmbiggener.Patches
 {

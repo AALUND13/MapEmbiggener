@@ -18,11 +18,15 @@ using MapEmbiggener.Controllers;
 
 namespace MapEmbiggener
 {
-    [BepInDependency("com.willis.rounds.unbound", BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin(MapEmbiggener.ModId, MapEmbiggener.ModName, "2.2.0")]
+    [BepInDependency("dev.rounds.unbound.core")]
+    [BepInPlugin(ModId, ModName, ModVersion)]
     [BepInProcess("Rounds.exe")]
     public class MapEmbiggener : BaseUnityPlugin
     {
+        private const string ModId = "pykess.rounds.plugins.mapembiggener";
+        private const string ModName = "Map Embiggener";
+        private const string ModVersion = "3.0.0";
+
         internal static readonly string[] stickFightObjsToIgnore = new string[] { "Real", "Chain", "PLatform", "Platform", "TreadMill", "Spike(Spike)", "SpikeBall"};
         internal static readonly string[] stickFightSpawnerObjs = new string[] {"(Pusher)(Clone)", "Box(Clone)(Clone)" };
 
@@ -40,9 +44,6 @@ namespace MapEmbiggener
         {
             public const string SyncModSettings = MapEmbiggener.ModId + "_Sync";
         }
-        private const string ModId = "pykess.rounds.plugins.mapembiggener";
-
-        private const string ModName = "Map Embiggener";
 
         private const float AbsMinMapSize = 0.25f;
         private const float AbsMaxMapSize = 5f;
