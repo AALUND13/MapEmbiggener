@@ -1,30 +1,22 @@
-﻿using System;
-using BepInEx;
-using HarmonyLib;
-using Photon.Pun;
-using UnboundLib;
-using UnboundLib.GameModes;
-using UnityEngine;
-using System.Collections;
-using UnboundLib.Networking;
-using System.Linq;
-using System.Collections.Generic;
-using UnboundLib.Utils.UI;
-using TMPro;
-using UnityEngine.UI;
+﻿using BepInEx;
 using BepInEx.Configuration;
-using MapEmbiggener.UI;
+using HarmonyLib;
 using MapEmbiggener.Controllers;
+using System;
+using TMPro;
+using Unbound.Core;
+using Unbound.Core.Utils.UI;
+using Unbound.Gamemodes;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace MapEmbiggener
-{
-    [BepInDependency("com.willis.rounds.unbound", BepInDependency.DependencyFlags.HardDependency)]
+namespace MapEmbiggener {
+    [BepInDependency("dev.rounds.unbound.core", BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin(MapEmbiggener.ModId, MapEmbiggener.ModName, "2.2.0")]
     [BepInProcess("Rounds.exe")]
-    public class MapEmbiggener : BaseUnityPlugin
-    {
-        internal static readonly string[] stickFightObjsToIgnore = new string[] { "Real", "Chain", "PLatform", "Platform", "TreadMill", "Spike(Spike)", "SpikeBall"};
-        internal static readonly string[] stickFightSpawnerObjs = new string[] {"(Pusher)(Clone)", "Box(Clone)(Clone)" };
+    public class MapEmbiggener : BaseUnityPlugin {
+        internal static readonly string[] stickFightObjsToIgnore = new string[] { "Real", "Chain", "PLatform", "Platform", "TreadMill", "Spike(Spike)", "SpikeBall" };
+        internal static readonly string[] stickFightSpawnerObjs = new string[] { "(Pusher)(Clone)", "Box(Clone)(Clone)" };
 
         // array of object names which are NOT stickfightmaps objects, but contain the names of stickfightmaps objects above
         internal static readonly string[] falsePositiveNonStickFightObjs = new string[] { "MovingPlatform" };
@@ -35,9 +27,8 @@ namespace MapEmbiggener
         public static ConfigEntry<bool> SuddenDeathConfig;
 
         internal static MapEmbiggener instance;
-        
-        private struct NetworkEventType
-        {
+
+        private struct NetworkEventType {
             public const string SyncModSettings = MapEmbiggener.ModId + "_Sync";
         }
         private const string ModId = "pykess.rounds.plugins.mapembiggener";
@@ -64,8 +55,7 @@ namespace MapEmbiggener
         private Toggle chaosModeToggle;
         private Toggle chaosModeClassicToggle;
 
-        private void Awake()
-        {
+        private void Awake() {
 
             MapEmbiggener.instance = this;
 
@@ -77,30 +67,21 @@ namespace MapEmbiggener
 
             this.gameObject.AddComponent<OutOfBoundsUtils>();
             this.gameObject.AddComponent<ControllerManager>().Init();
-            
-            On.MainMenuHandler.Awake += (orig, self) =>
-            {
-                orig(self);
-                this.ExecuteAfterSeconds(0.5f, () =>
-                {
-                    // Create the bounds border
-                    OutOfBoundsUtils.CreateBorder();
-                });
-            };
+
+            new Harmony(MapEmbiggener.ModId).PatchAll();
         }
 
-        private void Start()
-        {
-            new Harmony(MapEmbiggener.ModId).PatchAll();
-            
+
+
+        private void Start() {
             // load settings
             MapEmbiggener.setSize = MapEmbiggener.SizeConfig.Value;
             MapEmbiggener.suddenDeathMode = MapEmbiggener.SuddenDeathConfig.Value;
             MapEmbiggener.chaosMode = MapEmbiggener.ChaosConfig.Value;
             MapEmbiggener.chaosModeClassic = MapEmbiggener.ClassicChaosConfig.Value;
 
-            Unbound.RegisterCredits(MapEmbiggener.ModName, new String[] {"Pykess", "Ascyst (Project creation)", "BossSloth (Customizable bounds)"}, new string[] { "github", "support pykess", "support ascyst", "support bosssloth" }, new string[] { "https://github.com/pdcook/MapEmbiggener", "https://ko-fi.com/pykess", "https://www.buymeacoffee.com/Ascyst", "https://www.buymeacoffee.com/BossSloth" });
-            Unbound.RegisterMenu(MapEmbiggener.ModName, () => { }, this.NewGUI, null, false);
+            UnboundCore.RegisterCredits(MapEmbiggener.ModName, new String[] { "Pykess", "Ascyst (Project creation)", "BossSloth (Customizable bounds)" }, new string[] { "github", "support pykess", "support ascyst", "support bosssloth" }, new string[] { "https://github.com/pdcook/MapEmbiggener", "https://ko-fi.com/pykess", "https://www.buymeacoffee.com/Ascyst", "https://www.buymeacoffee.com/BossSloth" });
+            UnboundCore.RegisterMenu(MapEmbiggener.ModName, () => { }, this.NewGUI, null, false);
 
             // hooks for OOB patch
             GameModeManager.AddHook(GameModeHooks.HookPointStart, (gm) => OutOfBoundsUtils.SetOOBEnabled(true));
@@ -122,52 +103,43 @@ namespace MapEmbiggener
             GameModeManager.AddHook(GameModeHooks.HookPlayerPickEnd, ControllerManager.OnPlayerPickEnd);
         }
 
-        private void NewGUI(GameObject menu)
-        {
+        private void NewGUI(GameObject menu) {
             MenuHandler.CreateText("Map Embiggener Options", menu, out TextMeshProUGUI _);
             MenuHandler.CreateText(" ", menu, out TextMeshProUGUI _, 30);
-            void SliderChangedAction(float val)
-            {
+            void SliderChangedAction(float val) {
                 MapEmbiggener.SizeConfig.Value = val;
                 MapEmbiggener.setSize = val;
             }
             MenuHandler.CreateSlider("Map Size Multiplier", menu, 60, AbsMinMapSize, AbsMaxMapSize, MapEmbiggener.SizeConfig.Value, SliderChangedAction, out Slider slider);
-            void ResetButton()
-            {
+            void ResetButton() {
                 slider.value = 1f;
                 SliderChangedAction(1f);
             }
             MenuHandler.CreateButton("Reset Multiplier", menu, ResetButton, 30);
-            void suddenDeathModeToggleAction(bool flag)
-            {
+            void suddenDeathModeToggleAction(bool flag) {
                 MapEmbiggener.SuddenDeathConfig.Value = flag;
                 MapEmbiggener.suddenDeathMode = MapEmbiggener.SuddenDeathConfig.Value;
-                if (flag)
-                {
+                if(flag) {
                     chaosModeToggle.isOn = false;
                     chaosModeToggleAction(false);
                     chaosModeClassicToggle.isOn = false;
                     chaosModeClassicToggleAction(false);
                 }
             }
-            void chaosModeToggleAction(bool flag)
-            {
+            void chaosModeToggleAction(bool flag) {
                 MapEmbiggener.ChaosConfig.Value = flag;
                 MapEmbiggener.chaosMode = MapEmbiggener.ChaosConfig.Value;
-                if (flag)
-                {
+                if(flag) {
                     suddenDeathModeToggle.isOn = false;
                     suddenDeathModeToggleAction(false);
                     chaosModeClassicToggle.isOn = false;
                     chaosModeClassicToggleAction(false);
                 }
             }
-            void chaosModeClassicToggleAction(bool flag)
-            {
+            void chaosModeClassicToggleAction(bool flag) {
                 MapEmbiggener.ClassicChaosConfig.Value = flag;
                 MapEmbiggener.chaosModeClassic = MapEmbiggener.ClassicChaosConfig.Value;
-                if (flag)
-                {
+                if(flag) {
                     suddenDeathModeToggle.isOn = false;
                     suddenDeathModeToggleAction(false);
                     chaosModeToggle.isOn = false;

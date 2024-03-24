@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using MapEmbiggener.Controllers;
-using UnboundLib;
+using Unbound.Core;
 namespace MapEmbiggener.Patches
 {
     [HarmonyPatch(typeof(MapTransition), nameof(MapTransition.Exit))]

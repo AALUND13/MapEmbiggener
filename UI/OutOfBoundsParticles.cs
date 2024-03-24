@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnboundLib;
+using Unbound.Core;
 using MapEmbiggener.Controllers;
 
 namespace MapEmbiggener.UI
@@ -31,7 +31,7 @@ namespace MapEmbiggener.UI
                 OutOfBoundsParticles._Cam = new GameObject("OutOfBoundsParticlesCam", typeof(Camera));
                 OutOfBoundsParticles._Cam.transform.SetParent(UnityEngine.GameObject.Find("/Game/Visual/Rendering ").transform);
                 OutOfBoundsParticles._Cam.GetComponent<Camera>().CopyFrom(MainCam.instance.cam);
-                OutOfBoundsParticles._Cam.GetComponent<Camera>().depth = 4;
+                OutOfBoundsParticles._Cam.GetComponent<Camera>().depth = 0;
                 OutOfBoundsParticles._Cam.GetComponent<Camera>().cullingMask = (1 << OutOfBoundsParticles.layer);
                 DontDestroyOnLoad(OutOfBoundsParticles._Cam);
 
@@ -85,6 +85,7 @@ namespace MapEmbiggener.UI
                 this._Particles.GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
                 */
                 this._Particles.layer = OutOfBoundsParticles.layer;
+                this._Particles.GetComponent<ParticleSystem>().loop = false;
                 DontDestroyOnLoad(this._Particles);
 
                 return this._Particles;

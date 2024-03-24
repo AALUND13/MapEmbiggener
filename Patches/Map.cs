@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 using UnityEngine;
-using UnboundLib;
+using Unbound.Core;
 using Photon.Pun;
 using System.Collections.Generic;
 using System.Collections;

@@ -3,7 +3,7 @@ using UnityEngine;
 using MapEmbiggener.Controllers;
 using System.Reflection.Emit;
 using System.Collections.Generic;
-using UnboundLib;
+using Unbound.Core;
 using System.Reflection;
 namespace MapEmbiggener.Patches
 {
